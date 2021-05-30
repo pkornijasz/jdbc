@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista pojazdów</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link th:href="@{/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+    <form action="#" th:action="@{/save}" th:object="${vehicle}" method="post">
+        <h3>Podaj dane pojazdu:</h3>
+        <label>Marka: </label>
+        <input type="text" th:field="*{mark}" required>
+        <br>
+        <label>Model: </label>
+        <input type="text" th:field="*{model}" required>
+        <br>
+        <label>Kolor: </label>
+        <input type="text" th:field="*{color}" required>
+        <br>
+        <label>Rok produkcji: </label>
+        <input type="number" min="1900" max="2099" th:field="*{year}" required>
+        <br>
+        <input type="submit" th:value="Zapisz">
+        <input type="reset" name="reset" th:value="Wyczyść">
+    </form>
+    <form action="#" th:action="@{/}" th:object="${range}" method="get">
+        <h3>Podaj zakres lat produkcji:</h3>
+        <br>
+        <label>Od: </label>
+        <input type="number" min="1900" max="2099" th:field="*{minYear}">
+        <label>Do: </label>
+        <input type="number" min="1900" max="2099" th:field="*{maxYear}">
+        <br>
+        <input type="submit" th:value="Wybierz">
+    </form>
+    <h1>Lista pojazdów</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Marka</th>
+            <th>Model</th>
+            <th>Kolor</th>
+            <th>Data produkcji</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${vehicles.isEmpty()}">
+            <td colspan="2">Brak pojazdów w bazie danych!</td>
+        </tr>
+        <tr th:each="vehicle : ${vehicles}">
+            <td><p th:text="${vehicle.mark}"></p></td>
+            <td><p th:text="${vehicle.model}"></p></td>
+            <td><p th:text="${vehicle.color}"></p></td>
+            <td><p th:text="${vehicle.year}"></p></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
